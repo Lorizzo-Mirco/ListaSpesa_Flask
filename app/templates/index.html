@@ -1,12 +1,36 @@
+<!-- Dichiarazione del tipo di documento HTML -->
 <!DOCTYPE html>
+<!-- Inizio elemento html con attributo lingua impostato su inglese -->
 <html lang="en">
+<!-- Inizio dell'intestazione della pagina -->
 <head>
+    <!-- Definizione del set di caratteri utilizzato -->
     <meta charset="UTF-8">
+    <!-- Impostazione della viewport per il responsive design -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titolo della pagina mostrato nella scheda del browser -->
     <title>Document</title>
 </head>
+<!-- Inizio del corpo della pagina -->
 <body>
-    <h1>PER ORA FUNZIONA TUTTO</h1>
-    {{paperino}}
+    <!-- Intestazione principale della pagina -->
+    <h1>La tua lista della spesa</h1>
+    <!-- Condizione Jinja che verifica se la lista esiste e non è vuota -->
+    {% if lista %}
+    <!-- Lista non ordinata per visualizzare gli elementi della spesa -->
+    <ul>
+        <!-- Ciclo Jinja che itera attraverso ogni elemento della lista -->
+        {% for elemento in lista %}
+            <!-- Elemento della lista con contenuto dinamico da Jinja -->
+            <li>{{ elemento }}</li>
+        {% endfor %}
+    </ul>
+    <!-- Alternativa se la lista è vuota -->
+    {% else %}
+        <!-- Paragrafo mostrato quando la lista è vuota -->
+        <p>La tua lista è vuota.</p>
+    <!-- Chiusura della condizione if -->
+    {% endif %}
 </body>
+<!-- Chiusura dell'elemento html -->
 </html>
