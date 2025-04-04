@@ -1,36 +1,45 @@
-<!-- Dichiarazione del tipo di documento HTML -->
 <!DOCTYPE html>
-<!-- Inizio elemento html con attributo lingua impostato su inglese -->
-<html lang="en">
-<!-- Inizio dell'intestazione della pagina -->
-<head>
-    <!-- Definizione del set di caratteri utilizzato -->
-    <meta charset="UTF-8">
-    <!-- Impostazione della viewport per il responsive design -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Titolo della pagina mostrato nella scheda del browser -->
-    <title>Document</title>
-</head>
-<!-- Inizio del corpo della pagina -->
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lista della Spesa</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <meta name="theme-color" content="#00b894">
+    </head>
 <body>
-    <!-- Intestazione principale della pagina -->
-    <h1>La tua lista della spesa</h1>
-    <!-- Condizione Jinja che verifica se la lista esiste e non è vuota -->
-    {% if lista %}
-    <!-- Lista non ordinata per visualizzare gli elementi della spesa -->
-    <ul>
-        <!-- Ciclo Jinja che itera attraverso ogni elemento della lista -->
-        {% for elemento in lista %}
-            <!-- Elemento della lista con contenuto dinamico da Jinja -->
-            <li>{{ elemento }}</li>
-        {% endfor %}
-    </ul>
-    <!-- Alternativa se la lista è vuota -->
-    {% else %}
-        <!-- Paragrafo mostrato quando la lista è vuota -->
-        <p>La tua lista è vuota.</p>
-    <!-- Chiusura della condizione if -->
-    {% endif %}
+    <div class="container">
+        <h1><i class="fas fa-shopping-basket icona"></i>La mia Lista della Spesa</h1>
+        
+        <form action="/aggiungi" method="post" class="form-input">
+            <input type="text" name="elemento" placeholder="Cosa devi comprare?" required>
+            <button type="submit" class="btn-aggiungi"><i class="fas fa-plus icona"></i>Aggiungi</button>
+        </form>
+        
+        {% if lista %}
+        <ul class="lista-spesa">
+            {% for elemento in lista %}
+            <li class="elemento-lista">
+                <span class="elemento-testo"><i class="fas fa-shopping-cart icona"></i>{{ elemento }}</span>
+                <form action="/rimuovi/{{ loop.index0 }}" method="post">
+                    <button type="submit" class="btn-rimuovi"><i class="fas fa-trash-alt"></i></button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <form action="/svuota" method="post">
+            <button type="submit" class="btn-svuota"><i class="fas fa-broom icona"></i>Svuota la lista</button>
+        </form>
+        {% else %}
+        <p class="messaggio-vuoto"><i class="fas fa-info-circle icona"></i>La tua lista della spesa è vuota.</p>
+        {% endif %}
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Lista della Spesa - Applicazione creata con Flask</p>
+    </footer>
 </body>
-<!-- Chiusura dell'elemento html -->
 </html>
